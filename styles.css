@@ -1,0 +1,597 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1a4b3a 0%, #2d5a4a 50%, #1a4b3a 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    animation: slideUp 1s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Styles */
+.header {
+    padding: 40px 30px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+    position: relative;
+}
+
+.bismillah {
+    margin-bottom: 30px;
+    animation: fadeInDown 1.2s ease-out 0.3s both;
+}
+
+.arabic {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a4b3a;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.translation {
+    font-size: 14px;
+    color: #2d5a4a;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.ornament {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.islamic-pattern {
+    width: 120px;
+    height: 40px;
+    background: repeating-linear-gradient(
+        45deg,
+        #1a4b3a,
+        #1a4b3a 2px,
+        transparent 2px,
+        transparent 8px
+    );
+    border-radius: 20px;
+    position: relative;
+    animation: patternGlow 2s ease-in-out infinite alternate;
+}
+
+.islamic-pattern::before,
+.islamic-pattern::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #1a4b3a;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.islamic-pattern::before {
+    left: -10px;
+}
+
+.islamic-pattern::after {
+    right: -10px;
+}
+
+@keyframes patternGlow {
+    from {
+        box-shadow: 0 0 10px rgba(26, 75, 58, 0.3);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(26, 75, 58, 0.6);
+    }
+}
+
+/* Main Content */
+.main-content {
+    padding: 50px 30px;
+}
+
+.invitation-text {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInUp 1.2s ease-out 0.6s both;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a4b3a;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+.verse {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2d5a4a;
+    font-style: italic;
+    margin-bottom: 10px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.verse-ref {
+    font-size: 14px;
+    color: #1a4b3a;
+    font-weight: 500;
+}
+
+/* Couple Names */
+.couple-names {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeInScale 1.2s ease-out 0.9s both;
+}
+
+.name-container {
+    position: relative;
+}
+
+.groom-name,
+.bride-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1a4b3a;
+    margin: 20px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.groom-name {
+    animation: slideInLeft 1s ease-out 1.2s both;
+}
+
+.bride-name {
+    animation: slideInRight 1s ease-out 1.2s both;
+}
+
+.ampersand {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    color: #d4af37;
+    font-weight: 700;
+    margin: 0 20px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Event Details */
+.event-details {
+    display: grid;
+    gap: 40px;
+    margin-bottom: 50px;
+    animation: fadeInUp 1.2s ease-out 1.5s both;
+}
+
+.event {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.event::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.event:hover::before {
+    opacity: 1;
+    animation: shimmer 1.5s ease-in-out;
+}
+
+.event:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+}
+
+.event h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #1a4b3a;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.details p {
+    margin: 8px 0;
+    color: #2d5a4a;
+}
+
+.date {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a4b3a !important;
+}
+
+.time {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.venue {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* RSVP Section */
+.rsvp-section {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInUp 1.2s ease-out 1.8s both;
+}
+
+.rsvp-text {
+    font-size: 18px;
+    color: #2d5a4a;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+.rsvp-button {
+    background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+    color: #1a4b3a;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.rsvp-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%);
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #1a4b3a 0%, #2d5a4a 100%);
+    padding: 40px 30px;
+    text-align: center;
+    color: white;
+}
+
+.families {
+    margin-top: 30px;
+    animation: fadeInUp 1.2s ease-out 2.1s both;
+}
+
+.families p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.family-names {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.separator {
+    margin: 0 15px;
+    color: #d4af37;
+}
+
+/* Floating Elements */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #d4af37, #ffd700);
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+.flower::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.5), transparent);
+    border-radius: 50%;
+    transform: scale(1.5);
+}
+
+.flower-1 {
+    top: 20%;
+    left: 10%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.flower-2 {
+    top: 60%;
+    right: 15%;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.flower-3 {
+    top: 80%;
+    left: 20%;
+    animation: float 7s ease-in-out infinite;
+}
+
+.flower-4 {
+    top: 40%;
+    right: 5%;
+    animation: float 9s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+    }
+}
+
+/* Animation Keyframes */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .header {
+        padding: 30px 20px 15px;
+    }
+    
+    .arabic {
+        font-size: 20px;
+    }
+    
+    .translation {
+        font-size: 12px;
+    }
+    
+    .main-content {
+        padding: 30px 20px;
+    }
+    
+    .main-title {
+        font-size: 28px;
+    }
+    
+    .verse {
+        font-size: 14px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 24px;
+        display: block;
+        margin: 15px 0;
+    }
+    
+    .ampersand {
+        font-size: 30px;
+        margin: 10px 0;
+        display: block;
+    }
+    
+    .event {
+        padding: 20px;
+    }
+    
+    .event h3 {
+        font-size: 20px;
+    }
+    
+    .date {
+        font-size: 16px;
+    }
+    
+    .time,
+    .venue {
+        font-size: 14px;
+    }
+    
+    .rsvp-text {
+        font-size: 16px;
+    }
+    
+    .rsvp-button {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+    
+    .footer {
+        padding: 30px 20px;
+    }
+    
+    .islamic-pattern {
+        width: 80px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 24px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 20px;
+    }
+    
+    .verse {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+    
+    .event h3 {
+        font-size: 18px;
+    }
+    
+    .date {
+        font-size: 15px;
+    }
+    
+    .time,
+    .venue {
+        font-size: 13px;
+    }
+}
