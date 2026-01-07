@@ -57,51 +57,192 @@ function handleRSVPSubmission(e) {
     const attendance = formData.get('attendance');
     const message = formData.get('message');
     
-    // Create WhatsApp message
-    const whatsappMessage = createWhatsAppMessage(guestName, guestCount, attendance, message);
+    // Show loading state
+    showLoadingMessage();
     
-    // Open WhatsApp with the message
-    const whatsappUrl = `https://wa.me/60123456789?text=${encodeURIComponent(whatsappMessage)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    // Show success message
-    showSuccessMessage();
-    
-    // Close modal after a delay
-    setTimeout(() => {
-        closeModal();
-    }, 2000);
+    // Submit to Google Sheets
+    submitToGoogleSheets({
+        name: guestName,
+        count: guestCount,
+        attendance: attendance,
+        message: message,
+        timestamp: new Date().toLocaleString('ms-MY', { timeZone: 'Asia/Kuala_Lumpur' })
+    });
 }
 
-function createWhatsAppMessage(name, count, attendance, message) {
-    let whatsappMessage = `Assalamualaikum,\n\n`;
-    whatsappMessage += `Saya ingin mengesahkan kehadiran untuk Walimatul Urus Ahmad & Siti:\n\n`;
-    whatsappMessage += `👤 Nama: ${name}\n`;
-    whatsappMessage += `👥 Bilangan: ${count}\n`;
-    whatsappMessage += `✅ Status: ${attendance === 'hadir' ? 'Akan Hadir' : 'Tidak Dapat Hadir'}\n`;
+async function submitToGoogleSheets(data) {
+    // Replace this URL with your Google Apps Script web app URL
+    // To set up Google Sheets integration:
+    // 1. Go to script.google.com
+    // 2. Create a new project
+    // 3. Paste the Google Apps Script code (see comments below)
+    // 4. Deploy as web app with "Anyone" access
+    // 5. Copy the web app URL and replace the URL below
     
-    if (message && message.trim()) {
-        whatsappMessage += `💬 Ucapan: ${message}\n`;
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdN1unHSDPlJ0TD4wecH7aubjSJvOCwPQ6RxCmbQtNtN1SqFqeRFlAAKt7BLFpAQEB6A/exec';
+    
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Required for Google Apps Script
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        // Since we're using no-cors mode, we can't read the response
+        // We'll assume success if no error is thrown
+        showSuccessMessage('google-sheets');
+        
+        // Reset form
+        const form = document.getElementById('rsvpForm');
+        if (form) {
+            form.reset();
+        }
+        
+        // Close modal after a delay
+        setTimeout(() => {
+            closeModal();
+        }, 3000);
+        
+    } catch (error) {
+        console.error('Error submitting to Google Sheets:', error);
+        showErrorMessage();
+    }
+}
+
+/*
+GOOGLE APPS SCRIPT CODE (Copy this to script.google.com):
+
+function doPost(e) {
+  try {
+    // Get the active spreadsheet (create one first and note the ID)
+    const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; // Replace with your sheet ID
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+    
+    // Parse the incoming data
+    const data = JSON.parse(e.postData.contents);
+    
+    // If this is the first row, add headers
+    if (sheet.getLastRow() === 0) {
+      sheet.getRange(1, 1, 1, 6).setValues([
+        ['Timestamp', 'Name', 'Guest Count', 'Attendance', 'Message', 'Submitted At']
+      ]);
     }
     
-    whatsappMessage += `\nTerima kasih.\n`;
-    whatsappMessage += `Wassalamualaikum.`;
+    // Add the new row
+    const newRow = [
+      new Date(),
+      data.name || '',
+      data.count || '',
+      data.attendance === 'hadir' ? 'Akan Hadir' : 'Tidak Dapat Hadir',
+      data.message || '',
+      data.timestamp || ''
+    ];
     
-    return whatsappMessage;
+    sheet.appendRow(newRow);
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({success: true}))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({success: false, error: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
-function showSuccessMessage() {
+SETUP INSTRUCTIONS:
+1. Go to script.google.com
+2. Create a new project
+3. Replace the default code with the code above
+4. Create a new Google Sheet and copy its ID from the URL
+5. Replace 'YOUR_GOOGLE_SHEET_ID_HERE' with your actual sheet ID
+6. Deploy the script as a web app:
+   - Click "Deploy" > "New deployment"
+   - Choose "Web app" as type
+   - Set execute as "Me"
+   - Set access to "Anyone"
+   - Click "Deploy"
+7. Copy the web app URL and replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' above
+*/
+
+function showLoadingMessage() {
+    const modalBody = document.getElementById('modalBody');
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loading-message';
+    loadingDiv.innerHTML = `
+        <div style="text-align: center; padding: 2rem; background: rgba(33, 150, 243, 0.1); border-radius: 10px; border: 1px solid rgba(33, 150, 243, 0.3);">
+            <div style="display: inline-block; width: 20px; height: 20px; border: 3px solid #2196F3; border-radius: 50%; border-top-color: transparent; animation: spin 1s ease-in-out infinite; margin-bottom: 1rem;"></div>
+            <h3 style="color: #2196F3; margin-bottom: 1rem;">Menghantar...</h3>
+            <p style="color: #8b7355;">Sila tunggu sebentar...</p>
+        </div>
+        <style>
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+        </style>
+    `;
+    
+    modalBody.appendChild(loadingDiv);
+}
+
+function showSuccessMessage(type = 'whatsapp') {
+    // Remove loading message if exists
+    const loadingMessage = document.getElementById('loading-message');
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+    
     const modalBody = document.getElementById('modalBody');
     const successDiv = document.createElement('div');
-    successDiv.innerHTML = `
-        <div style="text-align: center; padding: 2rem; background: rgba(76, 175, 80, 0.1); border-radius: 10px; border: 1px solid rgba(76, 175, 80, 0.3);">
-            <h3 style="color: #4CAF50; margin-bottom: 1rem;">✅ Berjaya!</h3>
-            <p style="color: #8b7355;">Pengesahan kehadiran anda telah dihantar melalui WhatsApp.</p>
-            <p style="color: #a0896b; font-size: 0.9rem; margin-top: 0.5rem;">Terima kasih atas maklum balas anda.</p>
+    
+    if (type === 'google-sheets') {
+        successDiv.innerHTML = `
+            <div style="text-align: center; padding: 2rem; background: rgba(76, 175, 80, 0.1); border-radius: 10px; border: 1px solid rgba(76, 175, 80, 0.3);">
+                <h3 style="color: #4CAF50; margin-bottom: 1rem;">✅ Berjaya!</h3>
+                <p style="color: #8b7355;">Pengesahan kehadiran anda telah berjaya direkodkan.</p>
+                <p style="color: #a0896b; font-size: 0.9rem; margin-top: 0.5rem;">Terima kasih atas maklum balas anda.</p>
+            </div>
+        `;
+    } else {
+        successDiv.innerHTML = `
+            <div style="text-align: center; padding: 2rem; background: rgba(76, 175, 80, 0.1); border-radius: 10px; border: 1px solid rgba(76, 175, 80, 0.3);">
+                <h3 style="color: #4CAF50; margin-bottom: 1rem;">✅ Berjaya!</h3>
+                <p style="color: #8b7355;">Pengesahan kehadiran anda telah dihantar melalui WhatsApp.</p>
+                <p style="color: #a0896b; font-size: 0.9rem; margin-top: 0.5rem;">Terima kasih atas maklum balas anda.</p>
+            </div>
+        `;
+    }
+    
+    modalBody.appendChild(successDiv);
+}
+
+function showErrorMessage() {
+    // Remove loading message if exists
+    const loadingMessage = document.getElementById('loading-message');
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+    
+    const modalBody = document.getElementById('modalBody');
+    const errorDiv = document.createElement('div');
+    errorDiv.innerHTML = `
+        <div style="text-align: center; padding: 2rem; background: rgba(244, 67, 54, 0.1); border-radius: 10px; border: 1px solid rgba(244, 67, 54, 0.3);">
+            <h3 style="color: #F44336; margin-bottom: 1rem;">❌ Ralat</h3>
+            <p style="color: #8b7355;">Maaf, terdapat masalah semasa menghantar data.</p>
+            <p style="color: #a0896b; font-size: 0.9rem; margin-top: 0.5rem;">Sila cuba lagi atau hubungi kami terus.</p>
+            <div style="margin-top: 1rem;">
+                <a href="https://wa.me/60177431564" style="display: inline-block; padding: 0.8rem 1.5rem; background: #25D366; color: white; text-decoration: none; border-radius: 25px; font-weight: 600;" target="_blank">
+                    📱 WhatsApp Kami
+                </a>
+            </div>
         </div>
     `;
     
-    modalBody.appendChild(successDiv);
+    modalBody.appendChild(errorDiv);
 }
 
 // Add smooth animations for button interactions

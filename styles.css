@@ -71,11 +71,11 @@ body {
 }
 
 .couple-names {
-    font-family: 'Brush Script MT', cursive, 'Times New Roman', serif;
+    font-family: 'Tangerine', cursive, 'Times New Roman', serif;
     font-size: 2.5rem;
-    font-weight: 600;
+    font-weight: bold;
     color: #d4af37;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     line-height: 1.4;
     font-style: italic;
 }
@@ -523,7 +523,7 @@ body {
 
     .couple-names {
         font-size: 1.6rem;
-        font-weight: 600;
+        font-weight: bold;
     }
 
     .wedding-date {
@@ -611,7 +611,7 @@ body {
 
     .couple-names {
         font-size: 1.3rem;
-        font-weight: 600;
+        font-weight: bold;
     }
 
     .modal-body {
@@ -644,7 +644,7 @@ body {
     
     .couple-names {
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: bold;
     }
     
     .wedding-date {
