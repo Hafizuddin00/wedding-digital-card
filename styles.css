@@ -331,12 +331,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80px;
+    min-height: 120px;
+    padding: 1rem;
 }
 
 .countdown-widget .countdown-timer {
     text-decoration: none;
     font-family: inherit;
+    width: 100%;
+    display: block;
+}
+
+/* Logwork countdown widget styling */
+.countdown-timer {
+    color: #8b7355 !important;
+}
+
+.countdown-timer .countdown-digits {
+    color: #d4af37 !important;
+    font-weight: bold;
 }
 
 /* Program Content */
