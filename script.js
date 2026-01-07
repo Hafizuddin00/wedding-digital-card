@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
-    startCountdown();
 });
 
 function initializeApp() {
@@ -103,68 +102,6 @@ function showSuccessMessage() {
     `;
     
     modalBody.appendChild(successDiv);
-}
-
-function startCountdown() {
-    const weddingDate = new Date('2024-06-15T12:00:00').getTime();
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = weddingDate - now;
-        
-        if (distance > 0) {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            
-            // Update countdown in main page (if elements exist)
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            
-            if (daysElement) daysElement.textContent = days.toString().padStart(2, '0');
-            if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
-            if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
-        } else {
-            // Wedding day has arrived
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            
-            if (daysElement) daysElement.textContent = '00';
-            if (hoursElement) hoursElement.textContent = '00';
-            if (minutesElement) minutesElement.textContent = '00';
-        }
-    }
-    
-    // Update countdown immediately and then every minute
-    updateCountdown();
-    setInterval(updateCountdown, 60000);
-}
-
-function updateCountdownInModal() {
-    // Update countdown specifically in modal
-    setTimeout(() => {
-        const modalDays = document.querySelector('#modalBody #days');
-        const modalHours = document.querySelector('#modalBody #hours');
-        const modalMinutes = document.querySelector('#modalBody #minutes');
-        
-        if (modalDays && modalHours && modalMinutes) {
-            const weddingDate = new Date('2024-06-15T12:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                modalDays.textContent = days.toString().padStart(2, '0');
-                modalHours.textContent = hours.toString().padStart(2, '0');
-                modalMinutes.textContent = minutes.toString().padStart(2, '0');
-            }
-        }
-    }, 100);
 }
 
 // Add smooth animations for button interactions
@@ -291,11 +228,6 @@ function openModal(section) {
             if (rsvpForm) {
                 rsvpForm.addEventListener('submit', handleRSVPSubmission);
             }
-        }
-        
-        // Update countdown if it's the datetime section
-        if (section === 'datetime') {
-            updateCountdownInModal();
         }
     }
 }
