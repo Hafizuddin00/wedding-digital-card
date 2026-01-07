@@ -58,6 +58,10 @@ body {
     transform: scale(1.1);
 }
 
+.music-control:active {
+    transform: scale(0.95);
+}
+
 .music-control.playing {
     animation: pulse 2s infinite;
 }
@@ -66,6 +70,36 @@ body {
     0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
     70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
     100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+/* Mobile Music Control */
+@media (max-width: 768px) {
+    .music-control {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+        top: 15px;
+        right: 15px;
+    }
+    
+    /* Add tap instruction for mobile */
+    .wedding-card::after {
+        content: "Tap screen to play/pause music";
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8rem;
+        color: rgba(139, 115, 85, 0.7);
+        text-align: center;
+        pointer-events: none;
+        animation: fadeInOut 4s ease-in-out infinite;
+    }
+    
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
 }
 
 /* Wedding Card */

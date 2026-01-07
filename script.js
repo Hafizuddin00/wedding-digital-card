@@ -10,6 +10,12 @@ function initializeApp() {
     
     // Initialize background music
     initBackgroundMusic();
+    
+    // Initialize falling leaves
+    initFallingLeaves();
+    
+    // Setup mobile tap-to-toggle music
+    setupMobileMusicControl();
 }
 
 function initBackgroundMusic() {
@@ -78,6 +84,90 @@ function updateMusicButton(isPlaying) {
         musicControl.title = 'Play Music';
         icon.className = 'fa-solid fa-play';
     }
+}
+
+function setupMobileMusicControl() {
+    // Check if device is mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    
+    if (isMobile) {
+        console.log('Mobile device detected - setting up tap controls');
+        
+        // Add tap listener to the main wedding card area for mobile
+        const weddingCard = document.querySelector('.wedding-card');
+        if (weddingCard) {
+            weddingCard.addEventListener('touchend', function(e) {
+                // Prevent if user is interacting with navigation or modals
+                if (e.target.closest('.nav-btn') || e.target.closest('.modal-overlay') || e.target.closest('.music-control')) {
+                    return;
+                }
+                
+                e.preventDefault();
+                toggleMusicMobile();
+            }, { passive: false });
+        }
+        
+        // Also add click listener as fallback
+        document.addEventListener('click', function(e) {
+            // Only trigger on wedding card area, not on buttons or modals
+            if (e.target.closest('.wedding-card') && 
+                !e.target.closest('.nav-btn') && 
+                !e.target.closest('.modal-overlay') && 
+                !e.target.closest('.music-control')) {
+                toggleMusicMobile();
+            }
+        });
+    }
+}
+
+function toggleMusicMobile() {
+    const audio = document.getElementById('backgroundMusic');
+    
+    if (audio) {
+        if (audio.paused) {
+            audio.play().then(() => {
+                console.log('Music started via mobile tap');
+                updateMusicButton(true);
+                showMusicFeedback('▶️ Music Playing');
+            }).catch(error => {
+                console.log('Failed to play music:', error);
+                showMusicFeedback('❌ Music Error');
+            });
+        } else {
+            audio.pause();
+            updateMusicButton(false);
+            showMusicFeedback('⏸️ Music Paused');
+        }
+    }
+}
+
+function showMusicFeedback(message) {
+    // Create temporary feedback message
+    const feedback = document.createElement('div');
+    feedback.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #d4af37;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-size: 1rem;
+        z-index: 9999;
+        pointer-events: none;
+        backdrop-filter: blur(10px);
+    `;
+    feedback.textContent = message;
+    
+    document.body.appendChild(feedback);
+    
+    // Remove after 2 seconds
+    setTimeout(() => {
+        if (feedback.parentNode) {
+            feedback.parentNode.removeChild(feedback);
+        }
+    }, 2000);
 }
 
 function setupEventListeners() {
@@ -465,12 +555,21 @@ function initFallingLeaves() {
         return;
     }
 
+    console.log('Initializing falling leaves animation');
     gsap.set("#container", {perspective: 600});
     
     const total = 10;
     const container = document.getElementById("container");
+    
+    if (!container) {
+        console.error('Container element not found for falling leaves');
+        return;
+    }
+    
     const w = window.innerWidth;
     const h = window.innerHeight;
+    
+    console.log(`Screen dimensions: ${w}x${h}`);
     
     for (let i = 0; i < total; i++) { 
         const div1 = document.createElement('div');
@@ -512,6 +611,8 @@ function initFallingLeaves() {
         animateLeaf(div2);
         animateLeaf(div3);
     }
+    
+    console.log('Falling leaves animation initialized successfully');
 }
 
 function animateLeaf(elm) {   
@@ -544,8 +645,3 @@ function animateLeaf(elm) {
 function R(min, max) {
     return min + Math.random() * (max - min);
 }
-
-// Initialize falling leaves after DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initFallingLeaves();
-});
