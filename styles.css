@@ -5,17 +5,26 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling on html */
+}
+
 body {
     font-family: 'Georgia', serif;
-    background: url('image/home.jpg') center/contain no-repeat fixed;
-    background-color: #2c2c2c; /* Fallback color for areas not covered by image */
-    min-height: 100vh;
-    color: #fff;
-    overflow-x: hidden;
+    background: url('image/home.jpg') center/cover no-repeat fixed;
+    background-color: #2c2c2c; /* Fallback color */
+    height: 100vh;
+    width: 100vw;
+    color: #8b7355;
+    overflow: hidden; /* Prevent all scrolling */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 0 80px 0; /* Add bottom padding for navigation bar */
+    padding: 0 0 80px 0;
+    position: fixed; /* Fix the body to prevent any movement */
+    top: 0;
+    left: 0;
 }
 
 /* Remove the dark overlay to show background at 0% transparency */
@@ -56,10 +65,9 @@ body {
     font-family: 'Times New Roman', serif;
     font-size: 2rem;
     font-weight: 300;
-    color: #fff;
+    color: #8b7355;
     margin-bottom: 1rem;
     letter-spacing: 3px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .couple-names {
@@ -74,20 +82,18 @@ body {
 
 .wedding-date {
     font-size: 1rem;
-    color: #fff;
+    color: #8b7355;
     font-weight: 300;
     margin: 1rem 0;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .invitation-text {
     font-size: 0.9rem;
     line-height: 1.6;
-    color: #fff;
+    color: #8b7355;
     font-style: italic;
     margin-top: 1.5rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 /* Navigation Bar */
@@ -119,7 +125,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.3rem;
-    color: #fff;
+    color: #8b7355;
     position: relative;
 }
 
@@ -165,8 +171,8 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -176,6 +182,7 @@ body {
     visibility: hidden;
     transition: all 0.3s ease;
     padding: 0;
+    overflow: hidden; /* Prevent any overflow */
 }
 
 .modal-overlay.active {
@@ -186,16 +193,14 @@ body {
 .modal-content {
     background: rgba(255, 252, 245, 0.98);
     border-radius: 15px 15px 0 0;
-    max-width: 100vw;
-    width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
+    width: 100vw;
+    max-height: calc(100vh - 80px); /* Account for navbar */
+    overflow-y: auto; /* Allow scrolling within modal only */
     position: relative;
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
-    margin-bottom: 80px; /* Account for navbar height */
 }
 
 .modal-overlay.active .modal-content {
@@ -479,7 +484,7 @@ body {
 
 .whatsapp-btn {
     background: #25D366;
-    color: white;
+    color: #8b7355;
 }
 
 .whatsapp-btn:hover {
@@ -500,7 +505,11 @@ body {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     body {
-        padding: 10px 10px 80px 10px; /* Keep bottom padding for nav bar */
+        padding: 10px 10px 80px 10px;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
     }
 
     .wedding-card {
@@ -585,7 +594,11 @@ body {
 
 @media (max-width: 480px) {
     body {
-        padding: 5px 5px 80px 5px; /* Keep bottom padding for nav bar */
+        padding: 5px 5px 80px 5px;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
     }
 
     .nav-buttons {
@@ -624,7 +637,11 @@ body {
 
 @media (max-width: 360px) {
     body {
-        padding: 5px 5px 75px 5px; /* Slightly less padding for very small screens */
+        padding: 5px 5px 75px 5px;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
     }
 
     .hero-section {

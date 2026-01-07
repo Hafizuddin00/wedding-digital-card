@@ -283,7 +283,7 @@ function openModal(section) {
         
         // Show modal with slide-up animation
         modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        // No need to change body overflow since it's already fixed
         
         // Re-setup form listener if it's the attendance section
         if (section === 'attendance') {
@@ -311,5 +311,5 @@ function closeModal() {
     }
     
     modalOverlay.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scrolling
+    // No need to restore body overflow since it's always fixed
 }
