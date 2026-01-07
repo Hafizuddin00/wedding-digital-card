@@ -9,9 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
 </head>
 <body>
+    <!-- Falling Leaves Container -->
+    <div id="container"></div>
+    
+    <!-- Background Music -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="song/Hafiz_Suip_Ernie_Zakri_Berakhirlah_Pencarianku_LIRIK_ll4_IOpDLQY.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Music Control Button -->
+    <button class="music-control" id="musicControl" title="Toggle Music">
+        <i class="fa-solid fa-music"></i>
+    </button>
+    
     <!-- Main Wedding Card -->
     <div class="wedding-card">
         <!-- Hero Section -->
@@ -199,7 +214,12 @@
                             <option value="2">2 orang</option>
                             <option value="3">3 orang</option>
                             <option value="4">4 orang</option>
-                            <option value="5">5 orang atau lebih</option>
+                            <option value="5">5 orang</option>
+                            <option value="6">6 orang</option>
+                            <option value="7">7 orang</option>
+                            <option value="8">8 orang</option>
+                            <option value="9">9 orang</option>
+                            <option value="10">10 orang atau lebih</option>
                         </select>
                     </div>
                     

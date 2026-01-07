@@ -30,6 +30,44 @@ body {
 /* Remove the dark overlay to show background at 0% transparency */
 /* body::before removed */
 
+/* Background Music */
+#backgroundMusic {
+    display: none;
+}
+
+/* Music Control Button */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: #d4af37;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.music-control:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+.music-control.playing {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
 /* Wedding Card */
 .wedding-card {
     flex: 1;
@@ -40,6 +78,8 @@ body {
     padding: 20px;
     text-align: center;
     animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    z-index: 10;
 }
 
 @keyframes fadeInUp {
@@ -666,4 +706,42 @@ body {
     .btn-icon {
         font-size: 1.2rem;
     }
+}
+
+/* Falling Leaves Animation */
+#container {
+    width: 100%; 
+    height: 100%; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.dot {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    background: url(http://img.babathe.com/upload/specialDisplay/htmlImage/2019/20190104_rose2.png);
+    background-size: 100% 100%;
+    pointer-events: none;
+}
+
+.dot2 {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    background: url(http://img.babathe.com/upload/specialDisplay/htmlImage/2019/20190104_rose.png);
+    background-size: 100% 100%;
+    pointer-events: none;
+}
+
+.dot3 {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    background: url(http://img.babathe.com/upload/specialDisplay/htmlImage/2019/20190104_rose3.png);
+    background-size: 100% 100%;
+    pointer-events: none;
 }

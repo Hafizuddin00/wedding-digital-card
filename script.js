@@ -7,6 +7,77 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     // App loads instantly - no curtain animation
     console.log('Wedding invitation loaded successfully');
+    
+    // Initialize background music
+    initBackgroundMusic();
+}
+
+function initBackgroundMusic() {
+    const audio = document.getElementById('backgroundMusic');
+    
+    if (audio) {
+        // Set volume to a comfortable level
+        audio.volume = 0.3;
+        
+        // Try to play audio (modern browsers may block autoplay)
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Background music started successfully');
+            }).catch(error => {
+                console.log('Autoplay prevented, will start on user interaction');
+                // Add click listener to start music on first user interaction
+                document.addEventListener('click', startMusicOnInteraction, { once: true });
+                document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+            });
+        }
+    }
+}
+
+function startMusicOnInteraction() {
+    const audio = document.getElementById('backgroundMusic');
+    if (audio) {
+        audio.play().then(() => {
+            console.log('Background music started after user interaction');
+            updateMusicButton(true);
+        }).catch(error => {
+            console.log('Failed to start background music:', error);
+        });
+    }
+}
+
+function toggleMusic() {
+    const audio = document.getElementById('backgroundMusic');
+    const musicControl = document.getElementById('musicControl');
+    
+    if (audio) {
+        if (audio.paused) {
+            audio.play().then(() => {
+                updateMusicButton(true);
+            }).catch(error => {
+                console.log('Failed to play music:', error);
+            });
+        } else {
+            audio.pause();
+            updateMusicButton(false);
+        }
+    }
+}
+
+function updateMusicButton(isPlaying) {
+    const musicControl = document.getElementById('musicControl');
+    const icon = musicControl.querySelector('i');
+    
+    if (isPlaying) {
+        musicControl.classList.add('playing');
+        musicControl.title = 'Pause Music';
+        icon.className = 'fa-solid fa-pause';
+    } else {
+        musicControl.classList.remove('playing');
+        musicControl.title = 'Play Music';
+        icon.className = 'fa-solid fa-play';
+    }
 }
 
 function setupEventListeners() {
@@ -46,6 +117,12 @@ function setupEventListeners() {
     if (rsvpForm) {
         rsvpForm.addEventListener('submit', handleRSVPSubmission);
     }
+    
+    // Music control button
+    const musicControl = document.getElementById('musicControl');
+    if (musicControl) {
+        musicControl.addEventListener('click', toggleMusic);
+    }
 }
 
 function handleRSVPSubmission(e) {
@@ -77,7 +154,7 @@ async function submitToGoogleSheets(data) {
     // 2. Create a new project
     // 3. Paste the Google Apps Script code (see comments below)
     // 4. Deploy as web app with "Anyone" access
-    // 5. Copy the web app URL and replace the URL below
+    // 5. Copy the web app URL and replace GOOGLE_SCRIPT_URL below
     
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdN1unHSDPlJ0TD4wecH7aubjSJvOCwPQ6RxCmbQtNtN1SqFqeRFlAAKt7BLFpAQEB6A/exec';
     
@@ -117,56 +194,49 @@ GOOGLE APPS SCRIPT CODE (Copy this to script.google.com):
 
 function doPost(e) {
   try {
-    // Get the active spreadsheet (create one first and note the ID)
-    const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE'; // Replace with your sheet ID
-    const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
-    
-    // Parse the incoming data
+    const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
+    const SHEET_GID = SHEET_ID;
+
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = ss.getSheetById(SHEET_GID);
+
     const data = JSON.parse(e.postData.contents);
-    
-    // If this is the first row, add headers
+
+    // Add headers if sheet is empty
     if (sheet.getLastRow() === 0) {
-      sheet.getRange(1, 1, 1, 6).setValues([
-        ['Timestamp', 'Name', 'Guest Count', 'Attendance', 'Message', 'Submitted At']
+      sheet.appendRow([
+        'Timestamp',
+        'Name',
+        'Guest Count',
+        'Attendance',
+        'Message',
+        'Submitted At'
       ]);
     }
-    
-    // Add the new row
-    const newRow = [
+
+    sheet.appendRow([
       new Date(),
       data.name || '',
       data.count || '',
       data.attendance === 'hadir' ? 'Akan Hadir' : 'Tidak Dapat Hadir',
       data.message || '',
       data.timestamp || ''
-    ];
-    
-    sheet.appendRow(newRow);
-    
+    ]);
+
     return ContentService
-      .createTextOutput(JSON.stringify({success: true}))
+      .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
-      
+
   } catch (error) {
     return ContentService
-      .createTextOutput(JSON.stringify({success: false, error: error.toString()}))
+      .createTextOutput(JSON.stringify({
+        success: false,
+        error: error.toString()
+      }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
-SETUP INSTRUCTIONS:
-1. Go to script.google.com
-2. Create a new project
-3. Replace the default code with the code above
-4. Create a new Google Sheet and copy its ID from the URL
-5. Replace 'YOUR_GOOGLE_SHEET_ID_HERE' with your actual sheet ID
-6. Deploy the script as a web app:
-   - Click "Deploy" > "New deployment"
-   - Choose "Web app" as type
-   - Set execute as "Me"
-   - Set access to "Anyone"
-   - Click "Deploy"
-7. Copy the web app URL and replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' above
 */
 
 function showLoadingMessage() {
@@ -386,3 +456,96 @@ function closeModal() {
     modalOverlay.classList.remove('active');
     // No need to restore body overflow since it's always fixed
 }
+
+// Falling Leaves Animation
+function initFallingLeaves() {
+    // Wait for GSAP to load
+    if (typeof gsap === 'undefined') {
+        setTimeout(initFallingLeaves, 100);
+        return;
+    }
+
+    gsap.set("#container", {perspective: 600});
+    
+    const total = 10;
+    const container = document.getElementById("container");
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    
+    for (let i = 0; i < total; i++) { 
+        const div1 = document.createElement('div');
+        const div2 = document.createElement('div');
+        const div3 = document.createElement('div');
+        
+        gsap.set(div1, {
+            attr: {class: 'dot'},
+            x: R(0, w),
+            y: R(-400, -100),
+            z: R(-200, 200),
+            xPercent: -50,
+            yPercent: -50
+        });
+        
+        gsap.set(div2, {
+            attr: {class: 'dot2'},
+            x: R(0, w),
+            y: R(-400, -100),
+            z: R(-200, 200),
+            xPercent: -50,
+            yPercent: -50
+        });
+        
+        gsap.set(div3, {
+            attr: {class: 'dot3'},
+            x: R(0, w),
+            y: R(-400, -100),
+            z: R(-200, 200),
+            xPercent: -50,
+            yPercent: -50
+        });
+        
+        container.appendChild(div1);
+        container.appendChild(div2);
+        container.appendChild(div3);
+        
+        animateLeaf(div1);
+        animateLeaf(div2);
+        animateLeaf(div3);
+    }
+}
+
+function animateLeaf(elm) {   
+    gsap.to(elm, {
+        y: window.innerHeight + 100,
+        duration: R(8, 20),
+        ease: "none",
+        repeat: -1,
+        delay: R(-20, 0)
+    });
+    
+    gsap.to(elm, {
+        x: '+=100',
+        rotation: R(0, 180),
+        duration: R(4, 8),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+    
+    gsap.to(elm, {
+        duration: R(2, 8),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: -5
+    });
+}
+
+function R(min, max) {
+    return min + Math.random() * (max - min);
+}
+
+// Initialize falling leaves after DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initFallingLeaves();
+});
