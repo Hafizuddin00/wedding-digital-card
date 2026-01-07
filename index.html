@@ -1,93 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation - Ahmad & Siti</title>
+    <title>Walimatul Urus - Ahmad & Siti</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="bismillah">
-                <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
-                <p class="translation">In the name of Allah, the Most Gracious, the Most Merciful</p>
-            </div>
-            
-            <div class="ornament top-ornament">
-                <div class="islamic-pattern"></div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="invitation-text">
-                <h1 class="main-title">Wedding Invitation</h1>
-                <p class="verse">
-                    "And among His signs is that He created for you mates from among yourselves, 
-                    that you may dwell in tranquility with them, and He has put love and mercy between your hearts."
-                </p>
-                <p class="verse-ref">- Quran 30:21</p>
-            </div>
-
+    <!-- Main Wedding Card -->
+    <div class="wedding-card">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="main-title">Walimatul Urus</h1>
             <div class="couple-names">
-                <div class="name-container">
-                    <h2 class="groom-name">Ahmad Bin Abdullah</h2>
-                    <div class="ampersand">&</div>
-                    <h2 class="bride-name">Siti Binti Hassan</h2>
+                Ahmad Bin Abdullah<br>
+                &<br>
+                Siti Binti Hassan
+            </div>
+            <div class="wedding-date">15 Jun 2024 | Sabtu</div>
+            <div class="invitation-text">
+                Dengan penuh rasa syukur dan kegembiraan, kami sekeluarga<br>
+                menjemput Dato'/Datin/Tuan/Puan/Encik/Cik serta keluarga<br>
+                ke majlis walimatul urus putera/puteri kami.
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-buttons">
+        <button class="nav-btn" data-section="contact">
+            <span class="btn-icon">📞</span>
+            <span class="btn-text">Hubungi</span>
+        </button>
+        <button class="nav-btn" data-section="location">
+            <span class="btn-icon">📍</span>
+            <span class="btn-text">Lokasi</span>
+        </button>
+        <button class="nav-btn" data-section="datetime">
+            <span class="btn-icon">📅</span>
+            <span class="btn-text">Tarikh & Masa</span>
+        </button>
+        <button class="nav-btn" data-section="program">
+            <span class="btn-icon">📋</span>
+            <span class="btn-text">Atur Cara</span>
+        </button>
+        <button class="nav-btn" data-section="attendance">
+            <span class="btn-icon">✅</span>
+            <span class="btn-text">Kehadiran</span>
+        </button>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <button class="close-btn" id="closeBtn">&times;</button>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Content Templates -->
+    <div class="hidden-content">
+        <!-- Contact Section -->
+        <div id="contact-content">
+            <h2>Hubungi Kami</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Pihak Lelaki</h3>
+                    <p><strong>Ahmad Bin Abdullah</strong></p>
+                    <p>📱 +60 12-345 6789</p>
+                    <p>✉️ ahmad@email.com</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Pihak Perempuan</h3>
+                    <p><strong>Siti Binti Hassan</strong></p>
+                    <p>📱 +60 12-987 6543</p>
+                    <p>✉️ siti@email.com</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Keluarga</h3>
+                    <p><strong>Keluarga Abdullah</strong></p>
+                    <p>📱 +60 12-111 2222</p>
+                    <p><strong>Keluarga Hassan</strong></p>
+                    <p>📱 +60 12-333 4444</p>
                 </div>
             </div>
+        </div>
 
-            <div class="event-details">
-                <div class="event nikah">
-                    <h3>Majlis Akad Nikah</h3>
-                    <div class="details">
-                        <p class="date">Saturday, 15th June 2024</p>
-                        <p class="time">10:00 AM</p>
-                        <p class="venue">Masjid Al-Hidayah, Kuala Lumpur</p>
+        <!-- Location Section -->
+        <div id="location-content">
+            <h2>Lokasi Majlis</h2>
+            <div class="location-info">
+                <div class="location-details">
+                    <h3>📍 Alamat</h3>
+                    <p>Dewan Serbaguna<br>
+                    Taman Melawati<br>
+                    53100 Kuala Lumpur<br>
+                    Selangor</p>
+                </div>
+                <div class="location-map">
+                    <div class="map-placeholder">
+                        <p>🗺️ Peta Lokasi</p>
+                        <small>Dewan Serbaguna, Taman Melawati</small>
                     </div>
                 </div>
+                <div class="location-directions">
+                    <h3>🚗 Panduan Arah</h3>
+                    <p>• Dari KLCC: 15 minit pemanduan</p>
+                    <p>• Stesen LRT terdekat: Wangsa Maju</p>
+                    <p>• Tempat letak kereta tersedia</p>
+                </div>
+            </div>
+        </div>
 
-                <div class="event walimah">
-                    <h3>Majlis Walimatul Urus</h3>
-                    <div class="details">
-                        <p class="date">Saturday, 15th June 2024</p>
-                        <p class="time">7:00 PM</p>
-                        <p class="venue">Dewan Serbaguna, Taman Melawati</p>
+        <!-- Date & Time Section -->
+        <div id="datetime-content">
+            <h2>Tarikh & Masa</h2>
+            <div class="datetime-info">
+                <div class="date-card">
+                    <h3>📅 Tarikh</h3>
+                    <p class="date-main">Sabtu, 15 Jun 2024</p>
+                    <p class="date-hijri">28 Zulkaedah 1445H</p>
+                </div>
+                <div class="time-card">
+                    <h3>🕐 Masa</h3>
+                    <p class="time-main">12:00 Tengah Hari</p>
+                    <p class="time-end">hingga 4:00 Petang</p>
+                </div>
+                <div class="countdown-card">
+                    <h3>⏰ Countdown</h3>
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-label">Hari</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-label">Jam</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-label">Minit</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="rsvp-section">
-                <p class="rsvp-text">Your presence would be our greatest gift</p>
-                <button class="rsvp-button">RSVP</button>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="ornament bottom-ornament">
-                <div class="islamic-pattern"></div>
-            </div>
-            
-            <div class="families">
-                <p>With the blessings of our families</p>
-                <div class="family-names">
-                    <span>Family Abdullah</span>
-                    <span class="separator">•</span>
-                    <span>Family Hassan</span>
+        <!-- Program Section -->
+        <div id="program-content">
+            <h2>Atur Cara Majlis</h2>
+            <div class="program-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">12:00 PM</div>
+                    <div class="timeline-content">
+                        <h4>Ketibaan Tetamu</h4>
+                        <p>Pendaftaran dan penyambutan tetamu</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">12:30 PM</div>
+                    <div class="timeline-content">
+                        <h4>Jamuan Makan</h4>
+                        <p>Hidangan tradisi Melayu</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">1:30 PM</div>
+                    <div class="timeline-content">
+                        <h4>Ketibaan Pengantin</h4>
+                        <p>Upacara penyambutan pengantin</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">2:00 PM</div>
+                    <div class="timeline-content">
+                        <h4>Majlis Bersanding</h4>
+                        <p>Upacara persandingan dan doa</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">3:30 PM</div>
+                    <div class="timeline-content">
+                        <h4>Sesi Bergambar</h4>
+                        <p>Sesi fotografi bersama tetamu</p>
+                    </div>
                 </div>
             </div>
-        </footer>
+        </div>
 
-        <!-- Floating Elements -->
-        <div class="floating-elements">
-            <div class="flower flower-1"></div>
-            <div class="flower flower-2"></div>
-            <div class="flower flower-3"></div>
-            <div class="flower flower-4"></div>
+        <!-- Attendance Section -->
+        <div id="attendance-content">
+            <h2>Pengesahan Kehadiran</h2>
+            <div class="attendance-form">
+                <p class="attendance-intro">
+                    Kehadiran dan doa restu tuan/puan amatlah kami hargai.<br>
+                    Sila sahkan kehadiran anda untuk memudahkan perancangan kami.
+                </p>
+                
+                <form class="rsvp-form" id="rsvpForm">
+                    <div class="form-group">
+                        <label for="guestName">Nama Tetamu:</label>
+                        <input type="text" id="guestName" name="guestName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guestCount">Bilangan Kehadiran:</label>
+                        <select id="guestCount" name="guestCount" required>
+                            <option value="">Pilih bilangan</option>
+                            <option value="1">1 orang</option>
+                            <option value="2">2 orang</option>
+                            <option value="3">3 orang</option>
+                            <option value="4">4 orang</option>
+                            <option value="5">5 orang atau lebih</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attendance">Status Kehadiran:</label>
+                        <select id="attendance" name="attendance" required>
+                            <option value="">Pilih status</option>
+                            <option value="hadir">Akan Hadir</option>
+                            <option value="tidak-hadir">Tidak Dapat Hadir</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Ucapan (Pilihan):</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Tinggalkan ucapan untuk pengantin..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Hantar Pengesahan</button>
+                </form>
+                
+                <div class="contact-methods">
+                    <h3>Atau hubungi kami terus:</h3>
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/60123456789" class="whatsapp-btn" target="_blank">
+                            📱 WhatsApp
+                        </a>
+                        <a href="tel:+60123456789" class="call-btn">
+                            📞 Panggilan
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
