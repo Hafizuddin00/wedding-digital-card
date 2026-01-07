@@ -28,25 +28,12 @@ function initBackgroundMusic() {
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 console.log('Background music started successfully');
+                updateMusicButton(true);
             }).catch(error => {
-                console.log('Autoplay prevented, will start on user interaction');
-                // Add click listener to start music on first user interaction
-                document.addEventListener('click', startMusicOnInteraction, { once: true });
-                document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+                console.log('Autoplay prevented, use music control button to play');
+                updateMusicButton(false);
             });
         }
-    }
-}
-
-function startMusicOnInteraction() {
-    const audio = document.getElementById('backgroundMusic');
-    if (audio) {
-        audio.play().then(() => {
-            console.log('Background music started after user interaction');
-            updateMusicButton(true);
-        }).catch(error => {
-            console.log('Failed to start background music:', error);
-        });
     }
 }
 
@@ -309,7 +296,7 @@ function showErrorMessage() {
             <p style="color: #a0896b; font-size: 0.9rem; margin-top: 0.5rem;">Sila cuba lagi atau hubungi kami terus.</p>
             <div style="margin-top: 1rem;">
                 <a href="https://wa.me/60177431564" style="display: inline-block; padding: 0.8rem 1.5rem; background: #25D366; color: white; text-decoration: none; border-radius: 25px; font-weight: 600;" target="_blank">
-                    📱 WhatsApp Kami
+                    <i class="fa-brands fa-whatsapp" style="color: white;"></i> WhatsApp Kami
                 </a>
             </div>
         </div>
