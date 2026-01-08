@@ -5,14 +5,37 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
-    // App loads instantly - no curtain animation
+    // Start with curtain animation
     console.log('Wedding invitation loaded successfully');
-    
-    // Initialize background music
-    initBackgroundMusic();
     
     // Initialize falling leaves
     initFallingLeaves();
+    
+    // Start curtain animation after a brief delay
+    setTimeout(() => {
+        startCurtainAnimation();
+    }, 500);
+}
+
+function startCurtainAnimation() {
+    const curtainOverlay = document.querySelector('.curtain-overlay');
+    const body = document.body;
+    
+    // Start opening the curtains
+    curtainOverlay.classList.add('opening');
+    
+    // After curtains start opening, reveal content
+    setTimeout(() => {
+        body.classList.add('content-revealed');
+        
+        // Initialize background music after content is revealed
+        initBackgroundMusic();
+    }, 800);
+    
+    // Remove curtain overlay completely after animation
+    setTimeout(() => {
+        curtainOverlay.style.display = 'none';
+    }, 2000);
 }
 
 function initBackgroundMusic() {

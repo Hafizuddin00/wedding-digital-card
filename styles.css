@@ -30,6 +30,123 @@ body {
 /* Remove the dark overlay to show background at 0% transparency */
 /* body::before removed */
 
+/* Curtain Animation */
+.curtain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.curtain {
+    position: absolute;
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc6 50%, #d4c4a8 100%);
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 50px rgba(139, 115, 85, 0.3);
+}
+
+.curtain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 50%, rgba(139, 115, 85, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+    background-size: 30px 30px, 25px 25px, 100% 100%;
+    opacity: 0.7;
+}
+
+.curtain::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(139, 115, 85, 0.05) 2px,
+            rgba(139, 115, 85, 0.05) 4px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 2px,
+            rgba(212, 175, 55, 0.03) 2px,
+            rgba(212, 175, 55, 0.03) 4px
+        );
+    opacity: 0.6;
+}
+
+.curtain-left {
+    left: 0;
+    transform: translateX(0);
+}
+
+.curtain-right {
+    right: 0;
+    transform: translateX(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.curtain-logo {
+    width: 120px;
+    height: auto;
+    opacity: 0.9;
+    filter: sepia(20%) saturate(120%) hue-rotate(25deg);
+    position: absolute;
+    left: -60px; /* Center the logo on the curtain seam */
+    z-index: 2;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.curtain-overlay.opening .curtain-left {
+    transform: translateX(-100%);
+}
+
+.curtain-overlay.opening .curtain-right {
+    transform: translateX(100%);
+}
+
+.curtain-overlay.opening .curtain-logo {
+    transform: translateX(60px); /* Slide with the right curtain */
+    opacity: 0;
+}
+
+/* Hide main content initially */
+.wedding-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.nav-buttons {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+.content-revealed .wedding-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.content-revealed .nav-buttons {
+    opacity: 1;
+}
+
 /* Background Music */
 #backgroundMusic {
     display: none;
@@ -110,7 +227,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     padding: 2rem 1rem;
     text-align: center;
@@ -144,7 +261,6 @@ body {
     opacity: 0;
     transform: translateY(30px);
     animation: slowReveal 2s ease-out 1s forwards;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.418);
 }
 
 @keyframes slowReveal {
