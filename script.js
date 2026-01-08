@@ -43,7 +43,7 @@ function initBackgroundMusic() {
     
     if (audio) {
         // Set volume to a comfortable level
-        audio.volume = 0.3;
+        audio.volume = 0.5;
         
         // Try to play audio (modern browsers may block autoplay)
         const playPromise = audio.play();
