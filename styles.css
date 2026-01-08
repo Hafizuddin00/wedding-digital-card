@@ -116,6 +116,14 @@ body {
     text-align: center;
 }
 
+.bismillah-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    filter: sepia(20%) saturate(120%) hue-rotate(25deg);
+}
+
 .main-title {
     font-family: 'Times New Roman', serif;
     font-size: 2rem;
@@ -127,15 +135,16 @@ body {
 
 .couple-names {
     font-family: 'Tangerine', cursive, 'Times New Roman', serif;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: bold;
     color: #d4af37;
-    margin: 0.5rem 0;
-    line-height: 1.4;
+    margin: 1rem 0;
+    line-height: 1;
     font-style: italic;
     opacity: 0;
     transform: translateY(30px);
     animation: slowReveal 2s ease-out 1s forwards;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.418);
 }
 
 @keyframes slowReveal {
@@ -590,9 +599,16 @@ body {
         letter-spacing: 2px;
     }
 
+    .bismillah-image {
+        width: 150px;
+        margin-bottom: 1rem;
+    }
+
     .couple-names {
-        font-size: 1.6rem;
+        font-size: 2.2rem;
         font-weight: bold;
+        line-height: 1.2;
+        margin: 1rem 0;
     }
 
     .wedding-date {
@@ -678,9 +694,16 @@ body {
         font-size: 1.4rem;
     }
 
+    .bismillah-image {
+        width: 120px;
+        margin-bottom: 0.8rem;
+    }
+
     .couple-names {
-        font-size: 1.3rem;
+        font-size: 1.8rem;
         font-weight: bold;
+        line-height: 1.1;
+        margin: 0.8rem 0;
     }
 
     .modal-body {
@@ -711,9 +734,16 @@ body {
         letter-spacing: 1px;
     }
     
+    .bismillah-image {
+        width: 100px;
+        margin-bottom: 0.5rem;
+    }
+    
     .couple-names {
-        font-size: 1.1rem;
+        font-size: 1.5rem;
         font-weight: bold;
+        line-height: 1.1;
+        margin: 0.5rem 0;
     }
     
     .wedding-date {
