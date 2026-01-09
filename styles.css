@@ -304,7 +304,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(21, 5, 0, 0.9);
     backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding: 20px 0;
@@ -704,15 +704,20 @@ body {
         width: 100vw;
         overflow: hidden;
         position: fixed;
+        justify-content: flex-start; /* Change from center to flex-start */
+        padding-top: 15vh; /* Add top padding to position hero higher */
     }
 
     .wedding-card {
         max-width: none;
         width: 100%;
+        flex: none; /* Remove flex: 1 to allow custom positioning */
+        padding: 10px; /* Reduce padding */
     }
 
     .hero-section {
-        padding: 1.5rem 1rem;
+        padding: 1rem;
+        max-width: none; /* Allow full width on mobile */
     }
 
     .main-title {
@@ -798,6 +803,18 @@ body {
         width: 100vw;
         overflow: hidden;
         position: fixed;
+        justify-content: flex-start; /* Change from center to flex-start */
+        padding-top: 12vh; /* Add top padding for smaller screens */
+    }
+
+    .wedding-card {
+        flex: none; /* Remove flex: 1 to allow custom positioning */
+        padding: 5px; /* Reduce padding further */
+    }
+
+    .hero-section {
+        padding: 0.8rem;
+        max-width: none; /* Allow full width on mobile */
     }
 
     .nav-buttons {
@@ -846,10 +863,18 @@ body {
         width: 100vw;
         overflow: hidden;
         position: fixed;
+        justify-content: flex-start; /* Change from center to flex-start */
+        padding-top: 10vh; /* Add top padding for very small screens */
+    }
+
+    .wedding-card {
+        flex: none; /* Remove flex: 1 to allow custom positioning */
+        padding: 5px; /* Minimal padding */
     }
 
     .hero-section {
-        padding: 1rem;
+        padding: 0.5rem;
+        max-width: none; /* Allow full width on mobile */
     }
     
     .main-title {
