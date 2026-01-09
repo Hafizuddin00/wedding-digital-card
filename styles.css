@@ -93,40 +93,56 @@ body {
 .curtain-left {
     left: 0;
     transform: translateX(0);
+    animation: curtainOpenLeft 2s ease-in-out 1s forwards;
 }
 
 .curtain-right {
     right: 0;
     transform: translateX(0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    animation: curtainOpenRight 2s ease-in-out 1s forwards;
 }
 
 .curtain-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 120px;
     height: auto;
     opacity: 0.9;
-    filter: sepia(20%) saturate(120%) hue-rotate(25deg);
-    position: absolute;
-    left: -60px; /* Center the logo on the curtain seam */
-    z-index: 2;
-    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    animation: logoSlideRightFadeOut 2s ease-in-out 1s forwards;
+    z-index: 10000;
 }
 
-.curtain-overlay.opening .curtain-left {
-    transform: translateX(-100%);
+@keyframes logoSlideRightFadeOut {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(55vw - 50%), -50%) scale(1);
+        opacity: 0;
+    }
 }
 
-.curtain-overlay.opening .curtain-right {
-    transform: translateX(100%);
+@keyframes curtainOpenLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
 }
 
-.curtain-overlay.opening .curtain-logo {
-    transform: translateX(60px); /* Slide with the right curtain */
-    opacity: 0;
+@keyframes curtainOpenRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(110%);
+    }
 }
-
 /* Hide main content initially */
 .wedding-card {
     opacity: 0;
