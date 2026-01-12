@@ -30,11 +30,87 @@ function startCurtainAnimation() {
         
         // Initialize background music after content is revealed
         initBackgroundMusic();
+        
+        // Start hero section animations sequence
+        initHeroAnimations();
     }, 800);
     
     // Remove curtain overlay completely after animation
     setTimeout(() => {
         curtainOverlay.style.display = 'none';
+    }, 2000);
+}
+
+function initHeroAnimations() {
+    // Add sparkle effects around couple names
+    setTimeout(() => {
+        createSparkleEffect();
+    }, 6000);
+    
+    // Add gentle pulse to invitation text
+    setTimeout(() => {
+        const invitationText = document.querySelector('.invitation-text');
+        if (invitationText) {
+            invitationText.style.animation += ', gentlePulse 2s ease-in-out infinite';
+        }
+    }, 8000);
+}
+
+function createSparkleEffect() {
+    const coupleNames = document.querySelector('.couple-names');
+    if (!coupleNames) return;
+    
+    const sparkleContainer = document.createElement('div');
+    sparkleContainer.className = 'sparkle-container';
+    sparkleContainer.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+    `;
+    
+    coupleNames.style.position = 'relative';
+    coupleNames.appendChild(sparkleContainer);
+    
+    // Create sparkles
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            createSparkle(sparkleContainer);
+        }, i * 300);
+    }
+    
+    // Continue creating sparkles periodically
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            createSparkle(sparkleContainer);
+        }
+    }, 2000);
+}
+
+function createSparkle(container) {
+    const sparkle = document.createElement('div');
+    sparkle.innerHTML = '✨';
+    sparkle.style.cssText = `
+        position: absolute;
+        font-size: ${Math.random() * 8 + 8}px;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 10;
+        animation: sparkleAnimation 2s ease-out forwards;
+    `;
+    
+    container.appendChild(sparkle);
+    
+    // Remove sparkle after animation
+    setTimeout(() => {
+        if (sparkle.parentNode) {
+            sparkle.parentNode.removeChild(sparkle);
+        }
     }, 2000);
 }
 
