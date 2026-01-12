@@ -212,6 +212,12 @@ function setupEventListeners() {
     if (musicControl) {
         musicControl.addEventListener('click', toggleMusic);
     }
+    
+    // Wedding date calendar functionality
+    const weddingDate = document.getElementById('weddingDate');
+    if (weddingDate) {
+        weddingDate.addEventListener('click', addToCalendar);
+    }
 }
 
 function handleRSVPSubmission(e) {
@@ -643,4 +649,84 @@ function animateLeaf(elm) {
 
 function R(min, max) {
     return min + Math.random() * (max - min);
+}
+
+function addToCalendar() {
+    // Wedding event details
+    const eventDetails = {
+        title: 'Walimatul Urus - Hafiz & Anessa',
+        startDate: '20290414',
+        startTime: '120000', // 12:00 PM
+        endTime: '160000',   // 4:00 PM
+        location: 'Dewan Ibu\'Ku Alimah, No. 43, Jalan Perdana, Jalan Lingkaran Tengah, Taman Kluang Perdana, 86000 Kluang, Johor',
+        description: 'Walimatul Urus majlis perkahwinan Muhammad Hafizuddin bin Sha\'ari & Nurayna Anessa binti Azman'
+    };
+    
+    // Detect user's device/browser and create appropriate calendar link
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    const isIOS = /iphone|ipad|ipod/i.test(userAgent);
+    const isAndroid = /android/i.test(userAgent);
+    
+    if (isMobile) {
+        if (isIOS) {
+            // iOS Calendar
+            const iosUrl = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+URL:${window.location.href}
+DTSTART:${eventDetails.startDate}T${eventDetails.startTime}Z
+DTEND:${eventDetails.startDate}T${eventDetails.endTime}Z
+SUMMARY:${eventDetails.title}
+DESCRIPTION:${eventDetails.description}
+LOCATION:${eventDetails.location}
+END:VEVENT
+END:VCALENDAR`;
+            
+            window.open(iosUrl, '_blank');
+        } else if (isAndroid) {
+            // Android Calendar
+            const androidUrl = `content://com.android.calendar/time/${new Date('2029-04-14T12:00:00').getTime()}`;
+            window.location.href = androidUrl;
+            
+            // Fallback to Google Calendar if native doesn't work
+            setTimeout(() => {
+                openGoogleCalendar(eventDetails);
+            }, 1000);
+        } else {
+            // Other mobile devices - use Google Calendar
+            openGoogleCalendar(eventDetails);
+        }
+    } else {
+        // Desktop - show options
+        showCalendarOptions(eventDetails);
+    }
+}
+
+function openGoogleCalendar(eventDetails) {
+    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.title)}&dates=${eventDetails.startDate}T${eventDetails.startTime}Z/${eventDetails.startDate}T${eventDetails.endTime}Z&details=${encodeURIComponent(eventDetails.description)}&location=${encodeURIComponent(eventDetails.location)}`;
+    window.open(googleUrl, '_blank');
+}
+
+function showCalendarOptions(eventDetails) {
+    // Create modal with calendar options
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalBody = document.getElementById('modalBody');
+    
+    const calendarOptionsHTML = `
+        <h2>Add to Calendar</h2>
+        <div class="calendar-options">
+            <p style="text-align: center; color: #8b7355; margin-bottom: 1.5rem;">Choose your preferred calendar app:</p>
+            
+            <div class="calendar-buttons">
+                <button class="calendar-btn google-cal" onclick="openGoogleCalendar(${JSON.stringify(eventDetails).replace(/"/g, '&quot;')})">
+                    <i class="fa-brands fa-google"></i>
+                    Google Calendar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    modalBody.innerHTML = calendarOptionsHTML;
+    modalOverlay.classList.add('active');
 }

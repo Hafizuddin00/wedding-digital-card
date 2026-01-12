@@ -252,7 +252,7 @@ body {
 .bismillah-image {
     width: 200px;
     height: auto;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     opacity: 0;
     filter: sepia(20%) saturate(120%) hue-rotate(25deg);
     transform: translateY(-20px) scale(0.9);
@@ -541,6 +541,80 @@ body {
 
 .wedding-date:hover .right-ornament {
     transform: translateX(0) scaleX(-1) scale(1.1);
+}
+
+/* Make wedding date clickable */
+.wedding-date {
+    cursor: pointer;
+    user-select: none;
+}
+
+.wedding-date:active .date-container {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+/* Calendar options modal styling */
+.calendar-options {
+    text-align: center;
+}
+
+.calendar-buttons {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.calendar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    background: rgba(255, 252, 245, 0.8);
+    color: #8b7355;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.calendar-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.calendar-btn:active {
+    transform: translateY(0);
+}
+
+.calendar-btn i {
+    font-size: 1.2rem;
+}
+
+.google-cal:hover {
+    border-color: #4285f4;
+    color: #4285f4;
+}
+
+.outlook-cal:hover {
+    border-color: #0078d4;
+    color: #0078d4;
+}
+
+.ics-cal:hover {
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.yahoo-cal:hover {
+    border-color: #7b0099;
+    color: #7b0099;
 }
 
 @keyframes dateSlideIn {
